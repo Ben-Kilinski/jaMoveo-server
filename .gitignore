@@ -10,3 +10,9 @@ dist
 # Prisma gerado
 prisma/node_modules
 prisma/dev.db
+
+node_modules/
+dist/
+.env
+.prisma/
+
