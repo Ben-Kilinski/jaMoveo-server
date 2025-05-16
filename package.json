@@ -24,6 +24,7 @@
     "node-fetch": "^3.3.2",
     "prisma": "^6.7.0",
     "puppeteer": "^24.8.2",
+    "socket.io": "^4.8.1",
     "ws": "^8.18.2"
   },
   "devDependencies": {
