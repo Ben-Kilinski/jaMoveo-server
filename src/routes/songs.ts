@@ -37,7 +37,8 @@ router.post('/current', async (req: Request, res: Response): Promise<any> => {
   broadcastSong(full!);
 
   console.log('🎵 Saved and broadcasted:', saved.trackName);
-  return res.status(200).json({ message: 'Song selected' });
+  return res.status(200).json(saved);
+
 });
 
 // GET /api/songs/current

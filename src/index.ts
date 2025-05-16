@@ -11,15 +11,14 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// Configuração CORS para o frontend no Vercel
+// Ordem correta
+app.use(express.json());
+
 app.use(cors({
-  origin: 'https://ja-moveo-client-eta.vercel.app',
+  origin: ['https://ja-moveo-client-eta.vercel.app', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
-app.use(express.json());
 
 app.use('/api/songs', songRoutes);
 app.use('/api/auth', authRoutes);
@@ -28,11 +27,11 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('🚀 API online');
 });
 
-// Configura o Socket.IO no servidor HTTP, com CORS para seu frontend
 const io = new Server(server, {
   cors: {
-    origin: 'https://ja-moveo-client-eta.vercel.app',
+    origin: ['https://ja-moveo-client-eta.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
@@ -44,7 +43,6 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-// Função para emitir evento 'song-selected' para todos os clientes conectados
 export function broadcastSong(song: Record<string, any>) {
   io.emit('song-selected', song);
 }
