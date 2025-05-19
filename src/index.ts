@@ -11,14 +11,13 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// Ordem correta
-app.use(express.json());
 
 app.use(cors({
   origin: ['https://ja-moveo-client-eta.vercel.app', 'http://localhost:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   credentials: true,
 }));
+app.use(express.json());
 
 app.use('/api/songs', songRoutes);
 app.use('/api/auth', authRoutes);

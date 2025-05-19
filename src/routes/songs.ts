@@ -27,6 +27,8 @@ router.post('/current', async (req: Request, res: Response): Promise<any> => {
       chords: null, // será preenchido depois pelo admin
     },
   });
+  
+  
 
   console.log("🎤 Buscando letra de:", song.artistName, "-", song.trackName);
   console.log("🎤 LETRA:", lyrics);
@@ -102,6 +104,27 @@ router.patch('/:id/chords', async (req: Request, res: Response): Promise<any> =>
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// GET /api/songs/:id
+router.get('/:id', async (req: Request, res: Response): Promise<any> => {
+  const { id } = req.params;
+
+  try {
+    const song = await prisma.song.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!song) {
+      return res.status(404).json({ message: 'Song not found' });
+    }
+
+    res.status(200).json(song);
+  } catch (error) {
+    console.error('Erro ao buscar música por ID:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 
 
