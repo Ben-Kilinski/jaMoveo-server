@@ -7,8 +7,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types"] // ✅ ESSENCIAL
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src", "scripts"], // ✅ inclui suas pastas reais
+  "include": ["src/**/*", "scripts/**/*"],
   "exclude": ["node_modules", "dist"]
 }
