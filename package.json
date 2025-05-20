@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "ts-node-dev src/index.ts",
-  "start": "ts-node src/index.ts",
-  "build": "echo 'Skipping build step...'"
-},
+    "dev": "ts-node-dev src/index.ts",
+    "start": "ts-node src/index.ts",
+    "build": "echo 'Skipping build step...'"
+  },
   "keywords": [],
   "engines": {
     "node": "18.x"
