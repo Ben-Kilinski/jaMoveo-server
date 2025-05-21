@@ -11,4 +11,4 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
-    nodeVersion: 18
+    nodeVersion: 20
