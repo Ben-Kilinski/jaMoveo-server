@@ -10,13 +10,13 @@
   },
   "keywords": [],
   "engines": {
-    "node": "18.x"
+    "node": ">=20"
   },
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@prisma/client": "^6.8.1",
+    "@prisma/client": "^6.8.2",
     "@types/node": "^22.15.19",
     "bcryptjs": "^3.0.2",
     "cheerio": "^1.0.0",
