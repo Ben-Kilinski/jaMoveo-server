@@ -14,6 +14,17 @@ router.post('/current', async (req: Request, res: Response): Promise<any> => {
     return res.status(400).json({ message: 'Invalid song data' });
   }
 
+  // 👉 Verifica se já existe a música
+  const existing = await prisma.song.findFirst({
+    where: { trackId: song.trackId },
+    orderBy: { timestamp: 'desc' },
+  });
+
+  if (existing) {
+    broadcastSong(existing);
+    return res.status(200).json(existing);
+  }
+
   const lyrics = await fetchLyrics(song.artistName, song.trackName);
 
   const saved = await prisma.song.create({
@@ -24,24 +35,16 @@ router.post('/current', async (req: Request, res: Response): Promise<any> => {
       artworkUrl100: song.artworkUrl100,
       previewUrl: song.previewUrl,
       lyrics,
-      chords: null, // será preenchido depois pelo admin
+      chords: null,
     },
   });
-  
-  
-
-  console.log("🎤 Buscando letra de:", song.artistName, "-", song.trackName);
-  console.log("🎤 LETRA:", lyrics);
-
 
   const full = await prisma.song.findUnique({ where: { id: saved.id } });
 
   broadcastSong(full!);
-
-  console.log('🎵 Saved and broadcasted:', saved.trackName);
   return res.status(200).json(saved);
-
 });
+
 
 // GET /api/songs/current
 router.get('/current', async (_req: Request, res: Response): Promise<any> => {
@@ -68,7 +71,7 @@ router.delete('/history', async (_req, res) => {
   res.status(200).json({ message: 'History cleared' });
 });
 
-// Busca letra na API Lyrics.ovh
+// API Lyrics.ovh
 async function fetchLyrics(artist: string, title: string): Promise<string | null> {
   try {
     const res = await fetch(`https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`);
