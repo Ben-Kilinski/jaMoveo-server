@@ -12,8 +12,9 @@ const app = express();
 const server = http.createServer(app);
 
 
+
 app.use(cors({
-  origin: ['https://jamoveo-benkilinski.vercel.app/', 'http://localhost:5173'],
+  origin: ['https://jamoveo-benkilinski.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   credentials: true,
 }));
@@ -28,7 +29,7 @@ app.get('/', (_req: Request, res: Response) => {
 
 const io = new Server(server, {
   cors: {
-    origin: ['https://jamoveo-benkilinski.vercel.app/', 'http://localhost:5173'],
+    origin: ['https://jamoveo-benkilinski.vercel.app'],
     methods: ['GET', 'POST'],
     credentials: true,
   },
