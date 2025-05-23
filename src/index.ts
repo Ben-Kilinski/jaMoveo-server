@@ -13,11 +13,17 @@ const server = http.createServer(app);
 
 
 
+const allowedOrigins = [
+  'https://jamoveo-benkilinski.vercel.app',
+  'http://localhost:5173',
+];
+
 app.use(cors({
-  origin: ['https://jamoveo-benkilinski.vercel.app'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   credentials: true,
 }));
+
 app.use(express.json());
 
 app.use('/api/songs', songRoutes);
@@ -29,7 +35,7 @@ app.get('/', (_req: Request, res: Response) => {
 
 const io = new Server(server, {
   cors: {
-    origin: ['https://jamoveo-benkilinski.vercel.app'],
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -46,6 +52,8 @@ io.on('connection', (socket: Socket) => {
 export function broadcastSong(song: Record<string, any>) {
   io.emit('song-selected', song);
 }
+console.log(`🌍 Ambiente: ${process.env.NODE_ENV}`);
+console.log(`🔗 Origem permitida: ${allowedOrigins.join(', ')}`);
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
